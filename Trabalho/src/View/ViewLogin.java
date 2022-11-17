@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,10 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ViewLogin extends JFrame {
 
@@ -48,7 +46,7 @@ public class ViewLogin extends JFrame {
 	 */
 	public ViewLogin() {
 		setResizable(false);
-		
+		//heranca de ControllerLogin
 		ControllerLogin controller = new ControllerLogin(this);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewLogin.class.getResource("/Imagens/farmcacia 1.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,7 +56,7 @@ public class ViewLogin extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);	
-		
+		//bota um label como statusenum esperando login
 		StatusEnum e = StatusEnum.ESPERANDO_LOGIN;
 		JLabel lblNewLabel_2 = new JLabel("Status: "+e);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -88,7 +86,7 @@ public class ViewLogin extends JFrame {
 		txtsenha.setBounds(82, 155, 144, 32);
 		txtsenha.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		contentPane.add(txtsenha);
-		
+		//botao muda de cor quando o mouse passar por cima e sair
 		JButton btnentrar = new JButton("Entrar");
 		btnentrar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -104,10 +102,12 @@ public class ViewLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				StatusEnum i = StatusEnum.LOGIN_INVALIDO;
 				String usuario = getTxtusuario().getText();
-				String senha = String.valueOf(getTxtsenha().getPassword());		
+				String senha = String.valueOf(getTxtsenha().getPassword());	
+				//boolean para verificacao da existencia do usuario e senha certa
 				boolean existe = controller.getUsuario(usuario, senha)==null?false:true;	
+				//caso os dados estejam corretos
 				if(existe) {
-					
+					//avisa ao usuario que ele entrou mostando o nome do mesmo na tela, deixando a tela ViewLogin invisivel e deixando visivel a tela ViewMenu
 					JOptionPane.showMessageDialog(null, "Bem vindo ao sistema "+usuario+" !", "Paraben!", JOptionPane.INFORMATION_MESSAGE);
 					ViewMenu menu = new ViewMenu();							
 					menu.setVisible(true);
@@ -122,7 +122,7 @@ public class ViewLogin extends JFrame {
 		btnentrar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnentrar.setBounds(82, 197, 144, 31);
 		contentPane.add(btnentrar);
-		
+		//botao muda de cor quando o mouse passar por cima e sair
 		JButton btncadastrar = new JButton("Cadastrar");
 		btncadastrar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -136,6 +136,7 @@ public class ViewLogin extends JFrame {
 		});
 		btncadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// ao clicar no botao cadastrar a tela ViewLogin e tirada e a tela ViewCadastro fica visivel
 				ViewCadastro telacadastro = new ViewCadastro();
 				telacadastro.setVisible(true);
 				setVisible(false);
@@ -150,7 +151,7 @@ public class ViewLogin extends JFrame {
 		lblNewLabel_1.setBounds(-12, -11, 328, 322);
 		contentPane.add(lblNewLabel_1);
 	}
-
+	// metodos para heranca dos textfields para uso no ControllerLogin
 	public JTextField getTxtusuario() {
 		return txtusuario;
 	}

@@ -6,17 +6,16 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ViewCadastro extends JFrame {
 
@@ -45,7 +44,7 @@ public class ViewCadastro extends JFrame {
 	 */
 	public ViewCadastro() {
 		setResizable(false);
-		
+		//heranca de ControllerFormCadastro
 		ControllerFormCadastro Controller = new ControllerFormCadastro(this);
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewCadastro.class.getResource("/Imagens/farmcacia 1.png")));
@@ -78,7 +77,7 @@ public class ViewCadastro extends JFrame {
 		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSenha.setBounds(10, 80, 66, 24);
 		contentPane.add(lblSenha);
-		
+		//botao muda de cor quando o mouse passar por cima e sair
 		JButton btnsalvar = new JButton("Salvar");
 		btnsalvar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -92,7 +91,7 @@ public class ViewCadastro extends JFrame {
 		});
 		btnsalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+				//heranca do metodo salvaUsuario do COntrollerFormCadastro
 				Controller.salvaUsuario();
 				
 			}
@@ -100,7 +99,7 @@ public class ViewCadastro extends JFrame {
 		btnsalvar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnsalvar.setBounds(10, 150, 216, 33);
 		contentPane.add(btnsalvar);
-		
+		//botao muda de cor quando o mouse passar por cima e sair
 		JButton btnvoltar = new JButton("Voltar");
 		btnvoltar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -114,6 +113,7 @@ public class ViewCadastro extends JFrame {
 		});
 		btnvoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// ao clicar no botao voltar a tela ViewCadastro e tirada e a tela ViewLogin fica visivel
 				ViewLogin view = new ViewLogin();
 				view.setVisible(true);
 				dispose();
@@ -128,7 +128,7 @@ public class ViewCadastro extends JFrame {
 		lblNewLabel.setBounds(-11, 0, 286, 308);
 		contentPane.add(lblNewLabel);
 	}
-
+	// metodos para heranca dos textfields para uso no ControllerFormCadastro
 	public JTextField getTxtusuario() {
 		return txtusuario;
 	}

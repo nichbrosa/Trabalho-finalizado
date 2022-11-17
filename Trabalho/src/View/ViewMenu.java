@@ -8,10 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -56,6 +52,7 @@ public class ViewMenu extends JFrame {
 	 */
 	public ViewMenu() {
 		setResizable(false);
+		//heranca de ControllerMenuView
 		ControllerMenuView menu = new ControllerMenuView(this);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewMenu.class.getResource("/Imagens/farmcacia 1.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,7 +110,7 @@ public class ViewMenu extends JFrame {
 		txtid.setColumns(10);
 		
 		
-		
+		//botao muda de cor quando o mouse passar por cima e sair
 		JButton btnsalvar = new JButton("Salvar");
 		btnsalvar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -126,17 +123,19 @@ public class ViewMenu extends JFrame {
 			}
 		});
 		btnsalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {		
+			public void actionPerformed(ActionEvent e) {	
+				//verifica se os txt estao vazios avisando que algo nao foi informado
 				if(txtnome.getText().isEmpty() || txtquantidade.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null,"Nome do produto não informado!\nQuantidade do produto não informado!", "ERROR!", JOptionPane.ERROR_MESSAGE);
 				}else {
+				//se nao estiverem vazios e nao existirem ele sera salvo no banco
 				String nome = txtnome.getText();
 				int quantidade = Integer.parseInt(txtquantidade.getText());
 					menu.salvaprodutos(nome, quantidade);
 					}
 				}
 		});
-		
+		//botao muda de cor quando o mouse passar por cima e sair
 		JButton btnid = new JButton("ID");
 		File.add(btnid);
 		btnid.addMouseListener(new MouseAdapter() {
@@ -152,15 +151,18 @@ public class ViewMenu extends JFrame {
 		btnid.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//caso o txtid seja nulo o programa avisara para preenchelo
 				if(txtid.getText().isEmpty() ) {
 					JOptionPane.showMessageDialog(null,"ID não informado!", "ERROR!", JOptionPane.ERROR_MESSAGE);
 				}else {
+					//caso o id nao seja nulo sera verificado se ele existe
 					int id = Integer.parseInt(txtid.getText());
 				boolean existe = menu.getProduto2(id)==null?false:true; 
 					if(existe==true) {
+					//caso ele exista sera executada heranca
 				menu.abririd(id);
 				}else if(existe==false) {
+					//caso o id nao exista no banco sera avisado com um pop-up de erro
 					JOptionPane.showMessageDialog(null,"ID não existe!", "ERROR!", JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -171,7 +173,7 @@ public class ViewMenu extends JFrame {
 		
 		JMenu mnNewMenu = new JMenu("Editar");
 		menuBar.add(mnNewMenu);
-		
+		//botao muda de cor quando o mouse passar por cima e sair
 		JButton btnatualizar = new JButton("Atualizar");
 		btnatualizar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -185,6 +187,7 @@ public class ViewMenu extends JFrame {
 		});
 		btnatualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//verificadores de textfields para eles nao serem nulos
 				if(txtnome.getText().isEmpty() && txtquantidade.getText().isEmpty() && txtid.getText().isEmpty() ) {
 					JOptionPane.showMessageDialog(null,"ID não informado!\nNome do produto não informado!\nQuantidade do produto não informado!", "ERROR!", JOptionPane.ERROR_MESSAGE);
 				}else if(txtid.getText().isEmpty() ) {
@@ -194,13 +197,16 @@ public class ViewMenu extends JFrame {
 				}else if(txtquantidade.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null,"Quantidade do produto não informado!", "ERROR!", JOptionPane.ERROR_MESSAGE);
 				}else {
+					//caso nenhum deles seja nulo sera verificado a sua existencia
 					int id = Integer.parseInt(txtid.getText());
 					String nome = txtnome.getText();;
 					int quantidade = Integer.parseInt(txtquantidade.getText());
 				boolean existe = menu.getProdutos3(id, nome)==null?false:true; 
 					if(existe==true) {	
+						//se o nome ou id nao estiver condizente com o banco sera avisado com um pop-up de erro
 						JOptionPane.showMessageDialog(null,"ID ou nome não existe!", "ERROR!", JOptionPane.ERROR_MESSAGE);
 				}else if(existe==false) {
+					//caso ele exista o usuario podera atualizar a quantidade do produto 
 					menu.atualizarproduto(quantidade, id);	
 					}
 				}
@@ -209,7 +215,7 @@ public class ViewMenu extends JFrame {
 		});
 		btnatualizar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		mnNewMenu.add(btnatualizar);
-		
+		//botao muda de cor quando o mouse passar por cima e sair
 		JButton btnexcluir = new JButton("Excluir");
 		btnexcluir.addMouseListener(new MouseAdapter() {
 			@Override
@@ -223,9 +229,11 @@ public class ViewMenu extends JFrame {
 		});
 		btnexcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//verificador de textfield caso nao tenha nada
 				if(txtid.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "ID não digitado!", "Tente Novamente!", JOptionPane.INFORMATION_MESSAGE);
 				}else {
+				//caso ele exista no banco o mesmo sera excluido com todas as suas informacoes
 				int id = Integer.parseInt(txtid.getText());
 				menu.excluir(id);
 				}
@@ -253,10 +261,11 @@ public class ViewMenu extends JFrame {
 		lblNewLabel_1.setIcon(new ImageIcon(ViewMenu.class.getResource("/Imagens/verde ciano.jpeg")));
 		lblNewLabel_1.setBounds(-14, -15, 679, 393);
 		contentPane.add(lblNewLabel_1);
-		
+		//mostar os dados da tabela ao abrir a tela
 		menu.tabela();
 		
 	}
+	// metodos para heranca dos textfields para uso no ControllerMenuView
 	public JTextField getTxtnome() {
 		return txtnome;
 	}

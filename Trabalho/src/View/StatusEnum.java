@@ -1,5 +1,5 @@
 package View;
-
+//enum para mostragem do status do usuario
 public enum StatusEnum {
 	
 	ESPERANDO_LOGIN ("0"),

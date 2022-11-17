@@ -6,8 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class ControllerLogin {
+	//para ver as classes de ViewLogin
 	private ViewLogin view;
 
 	public ControllerLogin(ViewLogin view) {
@@ -21,7 +21,7 @@ public class ControllerLogin {
 	public void setView(ViewLogin view) {
 		this.view = view;
 	}
-	
+	//verificador de existencia do usuario e senha no banco
 	public Usuario getUsuario(String user, String senha) {
 		Usuario usuario = null;
 		String sql = "SELECT * FROM login WHERE usuario = ? and senha = ?";
