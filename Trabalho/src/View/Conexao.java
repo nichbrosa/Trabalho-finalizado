@@ -10,14 +10,14 @@ public class Conexao {
 	/**outra opcao de caminho para conexao
 	 * private String caminho ="jdbc:mysql://localhost/aplicacao";
 	 * private String usuario ="root";
-	 * private String senha="#Endhome10";
+	 * private String senha="";
 	 */
 	public Connection getConnection() throws SQLException{
 		
 		
 		//obter conexao a partir do gerenciador de driver (entre aspas o caminho do arquivo)
 		
-		Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost/aplicacao", "root", "Endhome10");
+		Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost/aplicacao", "root", "");
 		
 		return conexao;	
 		
